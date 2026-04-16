@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+    Run with: mvn test
+    parallel="methods" + thread-count="2" satisfies the Good-to-Have requirement.
+    DataProvider tests (loginDataExcel, searchKeywordsExcel) run serially
+    per @DataProvider(parallel=false) to avoid browser conflicts.
+-->
+<suite name="AutomationExercise Suite"
+       verbose="1"
+       thread-count="2"
+       parallel="methods">
+
+    <!-- Screenshot on failure + ExtentReports HTML -->
+    <listeners>
+        <listener class-name="com.autoqa.listeners.TestListener"/>
+    </listeners>
+
+    <!-- ── Module 1: User Authentication ─────────────────────────── -->
+    <test name="Auth Tests">
+        <classes>
+            <class name="com.autoqa.tests.AuthTest">
+                <methods>
+                    <include name="testLoginFromExcel"/>
+                    <include name="testLogout"/>
+                    <include name="testNewUserRegistration"/>
+                    <include name="testRegistrationEmptyNameValidation"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- ── Module 2: Product Search and Browse ───────────────────── -->
+    <test name="Product Tests">
+        <classes>
+            <class name="com.autoqa.tests.ProductTest">
+                <methods>
+                    <include name="testProductSearch"/>
+                    <include name="testCategoryNavigation"/>
+                    <include name="testProductDetailPage"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- ── Module 3: Shopping Cart ───────────────────────────────── -->
+    <test name="Cart Tests">
+        <classes>
+            <class name="com.autoqa.tests.CartTest">
+                <methods>
+                    <include name="testAddProductToCart"/>
+                    <include name="testRemoveProductFromCart"/>
+                    <include name="testCartCountUpdates"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- ── Module 4: Checkout Flow ───────────────────────────────── -->
+    <test name="Checkout Tests">
+        <classes>
+            <class name="com.autoqa.tests.CheckoutTest">
+                <methods>
+                    <include name="testCompleteCheckout"/>
+                    <include name="testCheckoutWithoutLogin"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- ── Module 5: Form Validations ────────────────────────────── -->
+    <test name="Form Validation Tests">
+        <classes>
+            <class name="com.autoqa.tests.FormValidationTest">
+                <methods>
+                    <include name="testEmptySignupFormSubmission"/>
+                    <include name="testInvalidEmailFormatOnSignup"/>
+                    <include name="testEmptyLoginFormSubmission"/>
+                    <include name="testInvalidLoginShowsError"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>
